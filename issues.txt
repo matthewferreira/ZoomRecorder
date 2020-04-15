@@ -1,0 +1,2 @@
+A list of problems and how I solved them during this project.
+- Had an error where the school website added a new temporary automatic popup window to the site which made my program fail. I solved this by creating a browser that goes directly to canvas, rather than going through extra steps to get the same result.
