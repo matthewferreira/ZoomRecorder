@@ -6,10 +6,13 @@ import pynput.mouse as ms
 from bs4 import BeautifulSoup
 import requests
 import os
-#browser = webdriver.Firefox(executable_path=r'C:\Users\Matthew Ferreira\Downloads\geckodriver.exe')
-#browser.set_window_position(0, 0)
-#browser.set_window_size(1920, 1080)
-#browser.get('https://csus.instructure.com/')
+import pprint as pp
+from Course import Course
+
+browser = webdriver.Firefox(executable_path=r'C:\Users\Matthew\Downloads\geckodriver.exe')
+browser.set_window_position(0, 0)
+browser.set_window_size(1920, 1080)
+browser.get('https://csus.instructure.com/')
 keyboard = kb.Controller()
 mouse = ms.Controller()
 
@@ -18,10 +21,6 @@ username = os.environ.get('CSUS_USERNAME')
 password = os.environ.get('CSUS_PASSWORD')
 
 def login():
-
-
-
-
 
     #entering username into username text field
     user_elem = browser.find_element_by_css_selector('#username')
@@ -35,6 +34,28 @@ def login():
     #giving time for browser to load
     time.sleep(10)
 
+def get_meeting_id(courseName):
+    course = Course(courseName)
+    if course.courseName == 'csc137':
+        course.courseNum = 2
+    elif course.courseName == 'stat50':
+        course.courseNum = 4
+
+    course_elem = browser.find_element_by_css_selector('div.ic-DashboardCard:nth-child(' + str(course.courseNum) + ') > div:nth-child(1) > div:nth-child(2)')
+    course_elem.click()
+
+    time.sleep(5)
+
+    zoom_link_elem = browser.find_element_by_css_selector('.context_external_tool_1818')
+    zoom_link_elem.click()
+
+    time.sleep(5)
+
+    browser.switch_to.frame('tool_content')
+    meeting_ids = browser.find_elements_by_css_selector('.ant-table-row-cell-break-word')
+    meeting_id = meeting_ids[5].text
+    print(meeting_id)
+
 
 def csc137():
     #selecting and clicking csc137 element on dashboard to access class links
@@ -47,32 +68,13 @@ def csc137():
     #selecting and clicking the zoom link for csc137
     csc137_zoom = browser.find_element_by_css_selector('.context_external_tool_1818') #NOTE: this is the same selector for every class
     csc137_zoom.click()
-    time.sleep(5)
-
-
-def join_lecture():
-    mouse.position = (1218, 421)
-    mouse.press(ms.Button.left)
-    mouse.release(ms.Button.left)
-
     time.sleep(8)
-    '''
-    mouse.position = (787, 554)
-    mouse.press(ms.Button.left)
-    mouse.release(ms.Button.left)
 
-    time.sleep(50)
-    '''
-def get_meeting_id():
+    browser.switch_to.frame('tool_content')
+    meeting_ids = browser.find_elements_by_css_selector('.ant-table-row-cell-break-word')
 
-
-    URL = 'https://csus.instructure.com/courses/62173/external_tools/1818'
-    page = requests.get(URL, auth=(username, password))
-    soup = BeautifulSoup(page.content, 'html.parser')
-    #soup.select('#username')
-    #results = soup.select('#integration-meeting-list > div > div > div > div > div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > div')
-    #print(results[0].text)
-    print(page.content)
+    meeting_id = meeting_ids[5].text
+    print(meeting_id)
 
 
 def stat50():
@@ -111,7 +113,8 @@ def record():
     keyboard.release(kb.Key.alt)
     keyboard.release('r')
 
-get_meeting_id()
+login()
+get_meeting_id('csc137')
 
 #time.sleep(2)
 
