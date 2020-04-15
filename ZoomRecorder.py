@@ -5,7 +5,7 @@ import pynput.keyboard as kb
 import pynput.mouse as ms
 from bs4 import BeautifulSoup
 import requests
-
+import os
 #browser = webdriver.Firefox(executable_path=r'C:\Users\Matthew Ferreira\Downloads\geckodriver.exe')
 #browser.set_window_position(0, 0)
 #browser.set_window_size(1920, 1080)
@@ -14,8 +14,8 @@ keyboard = kb.Controller()
 mouse = ms.Controller()
 
 
-username = 'matthewferreira'
-password = 'nQMjKBJP78Le2rQ'
+username = os.environ.get('CSUS_USERNAME')
+password = os.environ.get('CSUS_PASSWORD')
 
 def login():
 
