@@ -1,2 +1,6 @@
 A list of problems and how I solved them during this project.
+
 - Had an error where the school website added a new temporary automatic popup window to the site which made my program fail. I solved this by creating a browser that goes directly to canvas, rather than going through extra steps to get the same result.
+- Solved a big issue where I couldn't access data on a page, researched documentation to find a method to fix it.
+- Created a subprocess to open the Zoom app on my pc instead of making a tedious keyboard / mouse path to it
+
