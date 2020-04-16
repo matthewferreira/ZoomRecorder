@@ -1,15 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import time
 import pynput.keyboard as kb
 import pynput.mouse as ms
-from bs4 import BeautifulSoup
-import requests
-import os
-import pprint as pp
+import os, subprocess, platform, time
 from Course import Course
-import subprocess
-import platform
+
 
 desktop = 'DESKTOP-6BL58T5'
 laptop = 'LAPTOP-K5N3I4ET'
@@ -17,7 +12,7 @@ laptop = 'LAPTOP-K5N3I4ET'
 #  detecting if program is being run on my laptop or desktop since my User names are different
 if platform.uname().node == desktop:
     current_user = 'Matthew'
-elif plaform.uname().node == laptop:
+elif platform.uname().node == laptop:
     current_user = 'Matthew Ferreira'
 
 
