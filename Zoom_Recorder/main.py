@@ -1,7 +1,6 @@
-import ZoomRecorder as zr
-import canvas as cv
-from Course import Course
-import record as rec
+from Zoom_Recorder import ZoomRecorder as zr
+from utils import canvas as cv, record as rec
+from utils.Course import Course
 
 #  creating specific course objects i want to record
 stat50 = Course('stat50')

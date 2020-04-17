@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import subprocess
 import time
-import Course
-import base_data
-import record as rec
+from utils import base_data, Course, record as rec
 import pynput.mouse as ms
+
+enter_meeting_id = base_data.zoom_setup()[0]
+join_a_meeting = base_data.zoom_setup()[1]
+on_screen = base_data.zoom_setup()[2]
 
 #creating mouse controller to navigate PC automatically
 mouse = ms.Controller()
@@ -52,14 +54,14 @@ def join_meeting(course: Course):
     time.sleep(2)
 
     #  automatically navigating the UI of the zoom window. clicking the "join a meeting" button
-    mouse.position = base_data.join_a_meeting
-    mouse.click(rec.ms.Button.left, 1)
+    mouse.position = join_a_meeting
+    mouse.click(ms.Button.left, 1)
 
     time.sleep(2)
 
     #  clicking text box to enter a meeting ID
-    mouse.position = base_data.enter_meeting_id
-    mouse.click(rec.ms.Button.left, 2)
+    mouse.position = enter_meeting_id
+    mouse.click(ms.Button.left, 2)
 
     time.sleep(2)
 
@@ -71,7 +73,7 @@ def join_meeting(course: Course):
     time.sleep(2)
 
     #  moving mouse to a position that will be on the new zoom window. different for each computer.
-    mouse.position = base_data.on_screen
+    mouse.position = on_screen
     mouse.click(ms.Button.left, 1)
 
     #  windows + up arrow puts a lot of applications into fullscreen.
@@ -80,6 +82,3 @@ def join_meeting(course: Course):
     time.sleep(0.5)
     rec.keyboard.release(rec.kb.Key.up)
     rec.keyboard.release(rec.kb.Key.cmd)
-
-
-
